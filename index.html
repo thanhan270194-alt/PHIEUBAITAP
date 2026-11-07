@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bé học Toán: Phép chia có dư</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff4e0;--bg2:#ffe1ef;--card:#ffffff;--ink:#4a3560;--soft:#8a7aa0;--pink:#ff7eb6;--blue:#6ec6ff;--green:#5fd68a;--yellow:#ffd54a;--red:#ff6b6b;--chip:#fff0f7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#2a2140;--bg2:#3a2246;--card:#3b3158;--ink:#fdf2ff;--soft:#c4b5de;--chip:#4a3c6e}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#2a2140;--bg2:#3a2246;--card:#3b3158;--ink:#fdf2ff;--soft:#c4b5de;--chip:#4a3c6e}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:"Baloo 2","Nunito","Segoe UI",system-ui,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg),var(--bg2));background-color:var(--bg);overflow-x:hidden}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
+header{text-align:center;position:relative}
+h1{margin:6px 0 2px;font-size:clamp(26px,6vw,38px);font-weight:800;color:var(--pink)}
+.sub{color:var(--soft);margin:0 0 10px;font-size:17px}
+.deco{position:absolute;font-size:34px;animation:float 3s ease-in-out infinite}
+.d1{left:4px;top:4px}.d2{right:4px;top:10px;animation-delay:.8s}
+@keyframes float{50%{transform:translateY(-8px) rotate(8deg)}}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin:10px 0}
+.pill{background:var(--card);border-radius:999px;padding:4px 14px;font-weight:700;box-shadow:0 3px 0 rgba(0,0,0,.08)}
+.prog{flex:1;height:14px;background:var(--card);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--yellow),var(--pink));border-radius:99px;transition:width .4s}
+.card{background:var(--card);border-radius:28px;padding:20px;box-shadow:0 6px 0 rgba(0,0,0,.08);border:3px dashed var(--pink)}
+.story{display:flex;gap:12px;align-items:center;font-size:19px;line-height:1.4}
+.mascot{font-size:56px;animation:float 2.5s ease-in-out infinite}
+.eq{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;font-size:34px;font-weight:800;margin:16px 0}
+.eq .n{background:var(--chip);border-radius:16px;padding:0 14px}
+input{width:74px;font:inherit;font-size:30px;font-weight:800;text-align:center;border:3px solid var(--blue);border-radius:16px;padding:2px;background:var(--card);color:var(--ink)}
+input:focus{outline:4px solid var(--yellow)}
+.lbl{font-size:22px;color:var(--soft)}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+button{font:inherit;font-weight:800;font-size:20px;border:0;border-radius:18px;padding:8px 22px;cursor:pointer;color:#fff;box-shadow:0 5px 0 rgba(0,0,0,.18);transition:transform .1s}
+button:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+.go{background:var(--green)}.hint{background:var(--blue)}.next{background:var(--pink)}
+.msg{min-height:32px;text-align:center;font-size:20px;font-weight:700;margin:12px 0 0}
+.ok{color:#22a65a}.bad{color:var(--red)}
+.vis{margin-top:14px;display:none}
+.vis.show{display:block}
+.plates{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.plate{background:var(--chip);border-radius:50%/40%;padding:8px 10px;text-align:center;min-width:64px;border:2px solid var(--blue)}
+.plate .who{font-size:24px;display:block}
+.plate .it{font-size:16px;line-height:1.2;word-break:break-all}
+.left{border-color:var(--red);border-style:dashed}
+.cap{text-align:center;color:var(--soft);margin:8px 0 0;font-size:16px}
+.tip{margin-top:14px;background:var(--chip);border-radius:18px;padding:10px 14px;text-align:center;font-size:17px}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.end{text-align:center}
+.end .big{font-size:70px}
+.stars{font-size:44px;letter-spacing:4px}
+.pop{position:fixed;font-size:30px;pointer-events:none;animation:up 1.3s ease-out forwards;z-index:9}
+@keyframes up{to{transform:translateY(-220px) rotate(40deg);opacity:0}}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><span class="deco d1">🌈</span><span class="deco d2">🦄</span>
+<h1>🍭 Bé học Toán 🍭</h1><p class="sub">Phép chia có dư · số có hai chữ số chia cho số có một chữ số</p></header>
+
+<div id="game">
+<div class="bar"><span class="pill">Câu <b id="no">1</b>/10</span><div class="prog"><i id="pg"></i></div><span class="pill">⭐ <b id="sc">0</b></span></div>
+<div class="card" id="card">
+<div class="story"><span class="mascot" id="mas">🐰</span><div id="story"></div></div>
+<div class="eq"><span class="n" id="a"></span>:<span class="n" id="b"></span>=<input id="q" inputmode="numeric" maxlength="2" aria-label="Thương"><span class="lbl">dư</span><input id="r" inputmode="numeric" maxlength="1" aria-label="Số dư"></div>
+<div class="btns"><button class="go" id="chk">Kiểm tra ✔</button><button class="hint" id="hnt">Gợi ý 💡</button><button class="next" id="nxt" hidden>Câu tiếp ➜</button></div>
+<div class="msg" id="msg"></div>
+<div class="vis" id="vis"><div class="plates" id="plates"></div><p class="cap" id="cap"></p></div>
+<div class="tip">🌟 Nhớ nhé: <b>số dư luôn bé hơn số chia</b>!<br>Phép thử: thương × số chia + số dư = số bị chia</div>
+</div>
+</div>
+
+<div class="card end" id="end" hidden>
+<div class="big" id="eb">🏆</div><h2 id="et"></h2><div class="stars" id="es"></div><p id="ep" style="font-size:19px"></p>
+<div class="btns"><button class="next" id="again">Chơi lại 🔁</button></div>
+</div>
+</div>
+<script>
+const THEMES=[["viên kẹo","🍬"],["quả táo","🍎"],["chiếc bánh quy","🍪"],["ngôi sao","⭐"],["bông hoa","🌸"],["con cá","🐟"],["quả dâu","🍓"],["cái kẹo mút","🍭"]];
+const FRIENDS=[["bạn thỏ","🐰"],["bạn mèo","🐱"],["bạn cún","🐶"],["bạn gấu trúc","🐼"],["bạn khỉ","🐵"],["bạn heo","🐷"],["bạn ếch","🐸"]];
+const $=id=>document.getElementById(id);
+let idx,score,cur,tries,done;
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+function gen(){
+  for(;;){const d=rnd(2,9),q=rnd(2,9),r=rnd(1,d-1),n=d*q+r;
+    if(n>=10&&n<=99)return{n,d,q,r}}
+}
+function start(){idx=0;score=0;$("end").hidden=true;$("game").hidden=false;load()}
+function load(){
+  cur=gen();tries=0;done=false;
+  const t=THEMES[rnd(0,THEMES.length-1)],f=FRIENDS[rnd(0,FRIENDS.length-1)];
+  cur.t=t;cur.f=f;
+  $("mas").textContent=f[1];
+  $("story").innerHTML=`Có <b>${cur.n}</b> ${t[0]} ${t[1]}. Bé chia đều cho <b>${cur.d}</b> bạn nhỏ. Mỗi bạn được mấy ${t[0]} và còn thừa mấy ${t[0]}?`;
+  $("a").textContent=cur.n;$("b").textContent=cur.d;
+  $("q").value="";$("r").value="";$("q").disabled=$("r").disabled=false;
+  $("msg").textContent="";$("msg").className="msg";$("vis").classList.remove("show");
+  $("nxt").hidden=true;$("chk").hidden=false;
+  $("no").textContent=idx+1;$("sc").textContent=score;$("pg").style.width=(idx/10*100)+"%";
+  $("q").focus();
+}
+function hint(){
+  const{n,d,q,r,t,f}=cur,p=$("plates");p.innerHTML="";
+  const animals=["🐰","🐱","🐶","🐼","🐵","🐷","🐸","🦊","🐻"];
+  for(let i=0;i<d;i++){const e=document.createElement("div");e.className="plate";
+    e.innerHTML=`<span class="who">${animals[i]}</span><span class="it">${t[1].repeat(q)}</span>`;p.appendChild(e)}
+  if(r){const e=document.createElement("div");e.className="plate left";e.innerHTML=`<span class="who">😢</span><span class="it">${t[1].repeat(r)}</span>`;p.appendChild(e)}
+  $("cap").textContent=`${d} bạn, mỗi bạn ${q} ${t[0]}, còn thừa ${r} (không đủ chia nữa) → ${n} : ${d} = ${q} dư ${r}`;
+  $("vis").classList.add("show");
+}
+function pop(e){for(let i=0;i<14;i++){const s=document.createElement("span");s.className="pop";s.textContent=e[i%e.length];
+  s.style.left=rnd(10,90)+"vw";s.style.top=rnd(45,75)+"vh";s.style.animationDelay=(i*0.05)+"s";document.body.appendChild(s);setTimeout(()=>s.remove(),1800)}}
+function finish(){$("q").disabled=$("r").disabled=true;$("chk").hidden=true;$("nxt").hidden=false;
+  $("nxt").textContent=idx==9?"Xem kết quả 🏆":"Câu tiếp ➜";done=true}
+function check(){
+  if(done)return;
+  const q=$("q").value.trim(),r=$("r").value.trim(),m=$("msg");
+  if(q===""||r===""){m.textContent="Bé nhập cả thương và số dư nhé! ✏️";m.className="msg bad";return}
+  tries++;
+  if(+q===cur.q&&+r===cur.r){
+    if(tries==1)score++;
+    m.textContent=tries==1?"Giỏi quá! Chính xác rồi! 🎉":"Đúng rồi, bé giỏi lắm! 👏";m.className="msg ok";
+    pop(["⭐","🎉","🍭","💖","🌈"]);hint();finish();
+  }else if(tries>=2){
+    m.innerHTML=`Chưa đúng rồi. Đáp án: ${cur.n} : ${cur.d} = <b>${cur.q}</b> dư <b>${cur.r}</b> 🤗`;m.className="msg bad";hint();finish();
+  }else{
+    let h=+r>=cur.d?`Số dư phải bé hơn ${cur.d} đó bé! 🤔`:"Chưa đúng, thử lại nhé! Xem gợi ý bên dưới 💪";
+    m.textContent=h;m.className="msg bad";$("card").classList.remove("shake");void $("card").offsetWidth;$("card").classList.add("shake");hint();
+  }
+}
+function next(){idx++;if(idx>=10)return result();load()}
+function result(){
+  $("game").hidden=true;$("end").hidden=false;
+  const s=score,st=s>=9?3:s>=6?2:1;
+  $("eb").textContent=s>=9?"🏆":s>=6?"🥳":"🌱";
+  $("et").textContent=s>=9?"Bé là siêu nhân toán học!":s>=6?"Bé làm tốt lắm!":"Cố lên, bé sắp giỏi rồi!";
+  $("es").textContent="⭐".repeat(st)+"☆".repeat(3-st);
+  $("ep").textContent=`Bé đúng ngay lần đầu ${s}/10 câu.`;pop(["🎊","⭐","🦄","🍭"]);
+}
+$("chk").onclick=check;$("hnt").onclick=hint;$("nxt").onclick=next;$("again").onclick=start;
+document.addEventListener("keydown",e=>{if(e.key==="Enter"){done?next():check()}});
+start();
+</script>
+</body>
+</html>
